@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserDetail</title>
+</head>
+<body>
+    <p th:text="${session.user.id}">[]</p>
+    <p th:text="${session.user.username}"></p>
+    <p th:text="${session.user.password}"></p>
+</body>
+</html>

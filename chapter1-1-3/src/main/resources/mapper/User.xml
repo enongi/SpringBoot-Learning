@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chapter113.dao.UserDao">
+    <select id="select" parameterType="HashMap" resultType="com.chapter113.entity.User">
+        SELECT * FROM tb_user WHERE username = #{username} AND password = #{password}
+    </select>
+    <!--需求：使用MyBatis往MySQL数据库中插入一条记录后，需要返回该条记录的自增主键值。
+        方法：在mapper中指定keyProperty属性-->
+    <!-- useGeneratedKeys="true"把新增加的主键赋值到自己定义的keyProperty（id）中 -->
+    <insert id="insert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_user(username, password) VALUES(#{username}, #{password})
+    </insert>
+</mapper>
