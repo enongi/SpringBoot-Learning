@@ -45,15 +45,19 @@ public class UserController {
         return "/login";
     }*/
     @RequestMapping("/login")
-    public ModelAndView login(String username, String password, HttpServletRequest request, HttpSession session){
+    public ModelAndView login(HttpServletRequest request, HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.selectService(username,password);
-        if (user != null){
-            session.setAttribute("user",user);
-            modelAndView.setViewName("detail");
-            return modelAndView;
-        }else{
-            session.setAttribute("errormsg","账号或密码错误！请重新输入！");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (username !=null && password != null){
+            User user = userService.selectService(username,password);
+            if (user != null){
+                session.setAttribute("user",user);
+                modelAndView.setViewName("detail");
+                return modelAndView;
+            }else{
+                session.setAttribute("errormsg","账号或密码错误！请重新输入！");
+            }
         }
         modelAndView.setViewName("login");
         return modelAndView;
