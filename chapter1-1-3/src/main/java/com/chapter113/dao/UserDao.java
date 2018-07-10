@@ -11,4 +11,5 @@ import java.util.HashMap;
 public interface UserDao {
     int insert(HashMap<String, Object> map);
     User select(HashMap<String, Object> map);
+    User findName(HashMap<String, Object> map);
 }
