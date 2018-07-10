@@ -3,7 +3,6 @@ package com.chapter113.controller;
 import com.chapter113.entity.User;
 import com.chapter113.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,11 +24,11 @@ public class UserController {
         String password = request.getParameter("password");
         String repassword = request.getParameter("repassword");
         if(username!=null&&password!=null&&repassword!=null){
-            User user = userService.selectService(username,password);
+            User user = userService.findNameService(username);
             if (user != null){
-                session.setAttribute("errormsg","账号已存在！请重新输入！");
+                session.setAttribute("rerrormsg","账号已存在！请重新输入！");
             }else if (!repassword.equals(password)){
-                session.setAttribute("errormsg","两次密码不一致！请重新输入！");
+                session.setAttribute("rerrormsg","两次密码不一致！请重新输入！");
             }else{
                 userService.insertService(username, password);
                 modelAndView.setViewName("login");

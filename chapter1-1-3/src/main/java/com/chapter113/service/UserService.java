@@ -23,4 +23,9 @@ public class UserService {
         map.put("password",password);
         return userDao.select(map);
     }
+    public User findNameService(String username){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("username",username);
+        return userDao.findName(map);
+    }
 }
