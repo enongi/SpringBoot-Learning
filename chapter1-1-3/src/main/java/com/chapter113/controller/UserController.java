@@ -24,36 +24,37 @@ public class UserController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String repassword = request.getParameter("repassword");
-        User user = new User();
-        if(!password.equals(repassword)){
-            user = userService.selectService(username,password);
-        }else{
-            session.setAttribute("errormsg","两次密码不一致！请重新输入！");
+        if(username!=null&&password!=null&&repassword!=null){
+            User user = userService.selectService(username,password);
+            if (user != null){
+                session.setAttribute("errormsg","账号已存在！请重新输入！");
+            }else if (!repassword.equals(password)){
+                session.setAttribute("errormsg","两次密码不一致！请重新输入！");
+            }else{
+                userService.insertService(username, password);
+                modelAndView.setViewName("login");
+                return modelAndView;
+            }
+
         }
-        if (user == null){
-            userService.insertService(username,password);
-            modelAndView.setViewName("login");
-            return modelAndView;
-        }else{
-            session.setAttribute("errormsg","账号已存在！请重新输入！");
-        }
+        modelAndView.setViewName("register");
         return modelAndView;
     }
 
-   /* @RequestMapping("/tologin")
-    public String index() {
-        return "/login";
-    }*/
     @RequestMapping("/login")
-    public ModelAndView login(String username, String password, HttpServletRequest request, HttpSession session){
+    public ModelAndView login(HttpServletRequest request, HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.selectService(username,password);
-        if (user != null){
-            session.setAttribute("user",user);
-            modelAndView.setViewName("detail");
-            return modelAndView;
-        }else{
-            session.setAttribute("errormsg","账号或密码错误！请重新输入！");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (username !=null && password != null){
+            User user = userService.selectService(username,password);
+            if (user != null){
+                session.setAttribute("user",user);
+                modelAndView.setViewName("detail");
+                return modelAndView;
+            }else{
+                session.setAttribute("errormsg","账号或密码错误！请重新输入！");
+            }
         }
         modelAndView.setViewName("login");
         return modelAndView;
